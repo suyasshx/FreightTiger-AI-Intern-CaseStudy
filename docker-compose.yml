@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  routeguard-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: routeguard-ai-platform
+    ports:
+      - "8000:8000"
+    environment:
+      - HISTORY_THRESHOLD_PCT=15.0
+      - PEER_THRESHOLD_PCT=15.0
+      - TRAILING_HISTORY_WEEKS=8
+      - EMBEDDING_MODEL_NAME=all-MiniLM-L6-v2
+      - LLM_PROVIDER=none
+    volumes:
+      - ./outputs:/app/outputs
+      - ./evaluation:/app/evaluation
+    restart: unless-stopped

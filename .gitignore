@@ -1,0 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Cache directories
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Chroma vector database local files
+chroma_db/
+*.parquet
+
+# Node & Frontend build (dist is tracked for instant out-of-the-box demo without node)
+frontend/node_modules/
+# frontend/dist/
+frontend/.vite/
+
+# Temporary and Scratch files
+scratch/
+temp_extracted/
+*.log
+
+# Environment variables & secrets
+.env
+.env.local
+*.key
+*.pem
+
+# OS generated files
+.DS_Store
+Thumbs.db

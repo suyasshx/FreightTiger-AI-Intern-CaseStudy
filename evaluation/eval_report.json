@@ -1,0 +1,391 @@
+{
+  "evaluation_timestamp": "2026-10-14T09:24:53.456934+00:00",
+  "total_runtime_seconds": 15.5,
+  "summary": {
+    "total_route_weeks": 728,
+    "unexplained_anomalies": 24,
+    "justified_anomalies": 3,
+    "normal_route_weeks": 701,
+    "evidence_gate_accuracy_pct": 100.0,
+    "retrieval_top1_recall_pct": 100.0,
+    "retrieval_top3_recall_pct": 100.0,
+    "golden_sample_accuracy_pct": 100.0,
+    "false_justification_rate_pct": 0.0
+  },
+  "labeled_evidence_evaluations": [
+    {
+      "note_id": "N001",
+      "corridor": "Chennai-Bangalore",
+      "week_of": "2025-02-24",
+      "description": "N001 valid flooding start week",
+      "expected_decision": "PASS",
+      "actual_decision": "PASS",
+      "passed": true,
+      "gate_summary": "Note N001 successfully verified under all 6 evidence gates."
+    },
+    {
+      "note_id": "N001",
+      "corridor": "Chennai-Bangalore",
+      "week_of": "2025-03-03",
+      "description": "N001 valid flooding week 2",
+      "expected_decision": "PASS",
+      "actual_decision": "PASS",
+      "passed": true,
+      "gate_summary": "Note N001 successfully verified under all 6 evidence gates."
+    },
+    {
+      "note_id": "N001",
+      "corridor": "Chennai-Bangalore",
+      "week_of": "2025-03-10",
+      "description": "N001 post-flooding (roads passable Mar 9)",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "passed": true,
+      "gate_summary": "Rejected: Time mismatch. Anomaly week 2025-03-10 does not overlap stated event window (Flooding disruption window Feb 24 to Mar 8, 2025 (roads passable Mar 9))."
+    },
+    {
+      "note_id": "N001",
+      "corridor": "Mumbai-Pune",
+      "week_of": "2025-02-24",
+      "description": "N001 corridor mismatch",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "passed": true,
+      "gate_summary": "Rejected: Route mismatch. Note applies to 'Chennai-Bangalore', not 'Mumbai-Pune'."
+    },
+    {
+      "note_id": "N002",
+      "corridor": "Ahmedabad-Mumbai",
+      "week_of": "2025-01-20",
+      "description": "N002 regional festival surcharge week",
+      "expected_decision": "PASS",
+      "actual_decision": "PASS",
+      "passed": true,
+      "gate_summary": "Note N002 successfully verified under all 6 evidence gates."
+    },
+    {
+      "note_id": "N002",
+      "corridor": "Ahmedabad-Mumbai",
+      "week_of": "2025-02-17",
+      "description": "N002 post-festival week",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "passed": true,
+      "gate_summary": "Rejected: Time mismatch. Anomaly week 2025-02-17 does not overlap stated event window (Regional festival surcharge week of Jan 20, 2025)."
+    },
+    {
+      "note_id": "N003",
+      "corridor": "Delhi-Jaipur",
+      "week_of": "2025-05-05",
+      "description": "N003 nationwide diesel price hike (modest rise)",
+      "expected_decision": "PASS",
+      "actual_decision": "PASS",
+      "passed": true,
+      "gate_summary": "Note N003 successfully verified under all 6 evidence gates."
+    },
+    {
+      "note_id": "N004",
+      "corridor": "All Routes",
+      "week_of": "2024-03-11",
+      "description": "N004 toll plaza (routes not part of dataset)",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "passed": true,
+      "gate_summary": "Rejected: Note explicitly specifies the affected highway stretch is not part of this dataset. | Rejected: Note does not describe an increase-causing event or operational surcharge."
+    },
+    {
+      "note_id": "N005",
+      "corridor": "Mumbai-Delhi",
+      "week_of": "2024-07-29",
+      "description": "N005 maintenance (costs not significantly affected)",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "passed": true,
+      "gate_summary": "Rejected: Note does not describe an increase-causing event or operational surcharge. | Rejected by negative gate: Note states maintenance caused minor delays but costs were unaffected."
+    },
+    {
+      "note_id": "N006",
+      "corridor": "All Routes",
+      "week_of": "2025-09-22",
+      "description": "N006 stable demand with no disruptions",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "passed": true,
+      "gate_summary": "Rejected: Note does not describe an increase-causing event or operational surcharge. | Rejected by negative gate: Note confirms normal operating conditions."
+    },
+    {
+      "note_id": "N007",
+      "corridor": "Delhi-Jaipur",
+      "week_of": "2024-05-20",
+      "description": "N007 road resurfacing improvements",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "passed": true,
+      "gate_summary": "Rejected: Note does not describe an increase-causing event or operational surcharge. | Rejected by negative gate: Note announces road resurfacing improvement, not a cost increase."
+    },
+    {
+      "note_id": "N008",
+      "corridor": "Kolkata-Bhubaneswar",
+      "week_of": "2025-06-09",
+      "description": "N008 normal freight movement",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "passed": true,
+      "gate_summary": "Rejected: Note does not describe an increase-causing event or operational surcharge. | Rejected by negative gate: Note reports corridor freight movement remained completely normal."
+    },
+    {
+      "note_id": "N009",
+      "corridor": "Chennai-Bangalore",
+      "week_of": "2025-03-17",
+      "description": "N009 flood repair completion (recovery)",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "passed": true,
+      "gate_summary": "Rejected: Note does not describe an increase-causing event or operational surcharge. | Rejected by negative gate: Note is a post-disruption recovery report, not a justification for cost increases."
+    },
+    {
+      "note_id": "N010",
+      "corridor": "All Routes",
+      "week_of": "2025-10-27",
+      "description": "N010 fleet tracking costs absorbed by transporters",
+      "expected_decision": "REJECT",
+      "actual_decision": "REJECT",
+      "passed": true,
+      "gate_summary": "Rejected: Note does not describe an increase-causing event or operational surcharge. | Rejected by negative gate: Note explicitly states compliance costs were absorbed without a rate change."
+    }
+  ],
+  "retrieval_evaluations": [
+    {
+      "query": "flooding disruption detours and higher trip costs on Chennai-Bangalore",
+      "expected_note": "N001",
+      "retrieved_top3": [
+        "N001",
+        "N009",
+        "N002"
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "top1_similarity": 0.7192
+    },
+    {
+      "query": "regional festival surcharge limited truck availability on Ahmedabad-Mumbai corridor",
+      "expected_note": "N002",
+      "retrieved_top3": [
+        "N002",
+        "N005",
+        "N001"
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "top1_similarity": 0.8001
+    },
+    {
+      "query": "diesel prices rose nationwide pushing up transportation costs across all routes",
+      "expected_note": "N003",
+      "retrieved_top3": [
+        "N003",
+        "N006",
+        "N001"
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "top1_similarity": 0.8717
+    },
+    {
+      "query": "toll plaza commissioned on highway stretch not in dataset",
+      "expected_note": "N004",
+      "retrieved_top3": [
+        "N004",
+        "N001",
+        "N005"
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "top1_similarity": 0.7213
+    },
+    {
+      "query": "maintenance work delays between Mumbai and Delhi costs unaffected",
+      "expected_note": "N005",
+      "retrieved_top3": [
+        "N005",
+        "N007",
+        "N002"
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "top1_similarity": 0.7739
+    },
+    {
+      "query": "stable freight capacity demand no major disruptions logistics report",
+      "expected_note": "N006",
+      "retrieved_top3": [
+        "N006",
+        "N008",
+        "N010"
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "top1_similarity": 0.787
+    },
+    {
+      "query": "resurfacing work road improvements completed Delhi-Jaipur",
+      "expected_note": "N007",
+      "retrieved_top3": [
+        "N007",
+        "N005",
+        "N009"
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "top1_similarity": 0.7383
+    },
+    {
+      "query": "freight movement normal Kolkata-Bhubaneswar corridor no disruptions",
+      "expected_note": "N008",
+      "retrieved_top3": [
+        "N008",
+        "N006",
+        "N001"
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "top1_similarity": 0.9053
+    },
+    {
+      "query": "flood repair repairs completed returned to normal conditions Chennai-Bangalore",
+      "expected_note": "N009",
+      "retrieved_top3": [
+        "N009",
+        "N001",
+        "N005"
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "top1_similarity": 0.5953
+    },
+    {
+      "query": "vehicle tracking mandate compliance costs absorbed without rate change",
+      "expected_note": "N010",
+      "retrieved_top3": [
+        "N010",
+        "N006",
+        "N003"
+      ],
+      "top1_match": true,
+      "top3_match": true,
+      "top1_similarity": 0.752
+    }
+  ],
+  "golden_contract_evaluations": [
+    {
+      "case": "Delhi-Jaipur (2024-11-11)",
+      "expected": {
+        "route": "Delhi-Jaipur",
+        "week_of": "2024-11-11",
+        "expected_cost": 4.17,
+        "expected_flag": "Yes",
+        "expected_note_id": ""
+      },
+      "actual": {
+        "cost": 4.17,
+        "flag": "Yes",
+        "note_id": ""
+      },
+      "matched": true
+    },
+    {
+      "case": "Ahmedabad-Mumbai (2025-01-20)",
+      "expected": {
+        "route": "Ahmedabad-Mumbai",
+        "week_of": "2025-01-20",
+        "expected_cost": 3.29,
+        "expected_flag": "No (justified)",
+        "expected_note_id": "N002"
+      },
+      "actual": {
+        "cost": 3.29,
+        "flag": "No (justified)",
+        "note_id": "N002"
+      },
+      "matched": true
+    },
+    {
+      "case": "Mumbai-Pune (2025-09-15)",
+      "expected": {
+        "route": "Mumbai-Pune",
+        "week_of": "2025-09-15",
+        "expected_cost": 3.98,
+        "expected_flag": "Yes",
+        "expected_note_id": ""
+      },
+      "actual": {
+        "cost": 3.98,
+        "flag": "Yes",
+        "note_id": ""
+      },
+      "matched": true
+    }
+  ],
+  "threshold_sensitivity": [
+    {
+      "threshold_pct": 5.0,
+      "anomaly_candidate_count": 219,
+      "history_triggered_only": 17,
+      "peer_triggered_only": 169,
+      "both_triggered": 33,
+      "pct_of_total_route_weeks": 30.08
+    },
+    {
+      "threshold_pct": 10.0,
+      "anomaly_candidate_count": 90,
+      "history_triggered_only": 1,
+      "peer_triggered_only": 82,
+      "both_triggered": 7,
+      "pct_of_total_route_weeks": 12.36
+    },
+    {
+      "threshold_pct": 12.0,
+      "anomaly_candidate_count": 52,
+      "history_triggered_only": 0,
+      "peer_triggered_only": 45,
+      "both_triggered": 7,
+      "pct_of_total_route_weeks": 7.14
+    },
+    {
+      "threshold_pct": 15.0,
+      "anomaly_candidate_count": 27,
+      "history_triggered_only": 0,
+      "peer_triggered_only": 21,
+      "both_triggered": 6,
+      "pct_of_total_route_weeks": 3.71
+    },
+    {
+      "threshold_pct": 20.0,
+      "anomaly_candidate_count": 20,
+      "history_triggered_only": 1,
+      "peer_triggered_only": 14,
+      "both_triggered": 5,
+      "pct_of_total_route_weeks": 2.75
+    },
+    {
+      "threshold_pct": 25.0,
+      "anomaly_candidate_count": 13,
+      "history_triggered_only": 3,
+      "peer_triggered_only": 9,
+      "both_triggered": 1,
+      "pct_of_total_route_weeks": 1.79
+    },
+    {
+      "threshold_pct": 30.0,
+      "anomaly_candidate_count": 10,
+      "history_triggered_only": 1,
+      "peer_triggered_only": 8,
+      "both_triggered": 1,
+      "pct_of_total_route_weeks": 1.37
+    }
+  ],
+  "evaluation_limitations": [
+    "Ground truth verdicts are labeled on sample cases and explicit notes; remaining route-weeks are evaluated via deterministic consistency rules.",
+    "Synthetic shipment data contains 7 distinct origin-destination corridors with no missing weekly calendar gaps."
+  ]
+}
