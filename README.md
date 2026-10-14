@@ -354,11 +354,3 @@ docker run -p 8000:8000 routeguard-ai
    - *Fixed Trailing Window:* The 8-week trailing window cleanly captures recent trends, but an exponential moving average (EMA) could be added to give greater weight to very recent weeks.
 
 ---
-
-## 11. Deliverables Checklist
-
-- [x] **1. Working Source Code:** Complete project implemented, clean, tested with 28 passing unit & integration tests.
-- [x] **2. Final CSV:** Exact 8-column contract at `outputs/flagged_routes.csv` (728 rows, RFC 4180 compliant).
-- [x] **3. README:** Full documentation covering architecture, calculations, design decisions, limitations, and validation.
-- [x] **4. Reproducibility Evidence:** 3 untouched runs with identical SHA-256 hash (`c59bd40fe8a891d3d43d98439c4597db25b205e9588efa7cd72fd6c6707ecae1`).
-- [x] **5. Token and Cost Log:** Complete accounting for one full batch run at `evaluation/cost_log.json` ($0.00 external API cost).
