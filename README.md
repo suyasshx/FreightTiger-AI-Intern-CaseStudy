@@ -97,12 +97,16 @@ Routes are grouped strictly by directional `origin-destination` pairs and the pr
 
 ### 3.2 Monday-Start Calendar Weeks
 Weeks run strictly Monday through Sunday. The `week_of` field records the Monday date in ISO `YYYY-MM-DD` format:
-$$\text{week\_of} = \text{shipment\_date} - \text{timedelta}(\text{weekday})$$
+
+`week_of = shipment_date - timedelta(weekday)`
+
 *(For example, Sunday `2025-03-09` is assigned to Monday `2025-03-03`).*
 
 ### 3.3 Cost per Tonne-Kilometre Formulation
 To avoid distortion from small, high-rate consignments, we compute the volume-weighted metric across all shipments in that route-week:
-$$\text{cost\_per\_tonne\_km} = \frac{\sum_{i=1}^{N} \text{freight\_cost\_inr}_i}{\sum_{i=1}^{N} (\text{quantity\_tonnes}_i \times \text{distance\_km}_i)}$$
+
+`cost_per_tonne_km = SUM(freight_cost_inr) / SUM(quantity_tonnes * distance_km)`
+
 Zero or negative quantities and distances are guarded against during ingestion.
 
 ### 3.4 Own-History Baseline (Zero-Lookahead Trailing 8 Weeks)
@@ -110,14 +114,18 @@ For route $R$ in week $W_t$, the historical baseline is calculated from observed
 - **No Lookahead:** Current week $W_t$ and future weeks $W_{t+k}$ are strictly excluded (`df.shift(1)`).
 - **Handling Incomplete History:** If fewer than 8 prior weeks exist (e.g., during the initial weeks of the dataset), we calculate the arithmetic mean of all available prior observed weeks in that window. We **never** pad with synthetic data or extrapolate.
 - **Brand New Routes:** If 0 prior weeks exist (Week 1), `vs_own_history` is marked unavailable (`None`).
-$$\text{vs\_own\_history} = \frac{\text{cost} - \text{Baseline}_{\text{hist}}}{\text{Baseline}_{\text{hist}}} \times 100$$
+
+`vs_own_history (%) = ((cost - Baseline_hist) / Baseline_hist) * 100`
 
 ### 3.5 Similar-Route Peer Baseline (Self-Excluded)
 For route $R_i$ of haul type $H$ in week $W_t$, the peer baseline is the arithmetic mean across all **other** routes of the same haul type in that exact same calendar week:
-$$\text{Baseline}_{\text{peer}}(R_i, W_t) = \frac{1}{|P_{H, W_t} \setminus \{R_i\}|} \sum_{R_j \in P_{H, W_t} \setminus \{R_i\}} \text{cost}(R_j, W_t)$$
+
+`Baseline_peer(route, week) = average cost of all OTHER routes with the same haul type in that same week`
+
 - Route $R_i$ is strictly excluded from its own peer average to prevent self-dilution.
 - If no peer routes exist in that haul tier during that week, the comparison is marked unavailable.
-$$\text{vs\_similar\_routes} = \frac{\text{cost} - \text{Baseline}_{\text{peer}}}{\text{Baseline}_{\text{peer}}} \times 100$$
+
+`vs_similar_routes (%) = ((cost - Baseline_peer) / Baseline_peer) * 100`
 
 ### 3.6 Anomaly Policy & Threshold Rationale
 - **Default Threshold:** $\ge +15.0\%$ increase against either `vs_own_history` or `vs_similar_routes`.
