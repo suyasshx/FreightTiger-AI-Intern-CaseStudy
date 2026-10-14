@@ -213,13 +213,12 @@ Documented in `evaluation/cost_log.json`:
 
 ### Prerequisites
 - Python 3.10+ (Tested on Python 3.14)
-- Node.js 18+ & npm (For web UI)
 - *(Optional)* Docker & Docker Compose
 
 ### 1. Clone & Set Up Python Environment
 ```bash
-git clone <repo-url>
-cd "AI Intern Case Study"
+git clone https://github.com/suyasshx/FreightTiger-AI-Intern-CaseStudy.git
+cd FreightTiger-AI-Intern-CaseStudy
 
 # Create virtual environment
 python -m venv .venv
