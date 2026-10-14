@@ -254,41 +254,46 @@ python evaluation/reproducibility_check.py
 python evaluation/run_evaluation.py
 ```
 
-### 5. Start the Full-Stack Application
-The frontend is already pre-built into `frontend/dist/` and statically served by FastAPI!
-
+### 5. Start the REST API & Documentation
 ```bash
-# Start backend on http://localhost:8000
+# Start backend API on http://localhost:8000
 python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
 ```
-Open **[http://localhost:8000](http://localhost:8000)** in your browser to access:
-- **Operations Overview:** Top-line KPIs, weekly freight trends, haul-tier breakdown.
-- **Route Explorer:** Filter by route, week, verdict, and inspect historical/peer deltas.
-- **Evidence Inspector Modal:** Click any row to inspect original note text and gate checklists.
-- **AI Assistant:** Interactive natural language Q&A grounded in computed findings.
-- **Evaluation & Audit:** View the 3-run reproducibility audit and $0.00 cost log.
-- **Export Center:** Download the official contract CSV.
+- **Interactive Swagger Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Health Check & Telemetry:** [http://localhost:8000/api/health](http://localhost:8000/api/health)
+- **Operational Metrics Endpoint:** [http://localhost:8000/api/overview](http://localhost:8000/api/overview)
+- **CSV Download Endpoint:** [http://localhost:8000/api/export/csv](http://localhost:8000/api/export/csv)
 
-*(For frontend active development, navigate to `frontend/` and run `npm run dev` on port 5173).*
-
-### 6. Run with Docker Compose
+### 6. Run with Docker
 ```bash
-docker-compose up --build
+docker build -t routeguard-ai .
+docker run -p 8000:8000 routeguard-ai
 ```
-Access the application at `http://localhost:8000`.
 
 ---
 
-## 8. Repository Structure
+## 8. Five Core Deliverables Summary
+
+| # | Deliverable | Location in Repository | Status & Verification |
+|---|---|---|---|
+| **1** | **Working Source Code** | `backend/`, `cli.py`, `tests/` | Complete, modular, type-hinted Python pipeline. All 28 pytest tests passing. |
+| **2** | **Final Graded CSV** | [`outputs/flagged_routes.csv`](file:///outputs/flagged_routes.csv) | Exact 8 columns, 728 route-weeks, RFC 4180 compliant, matching golden samples. |
+| **3** | **README & Documentation** | `README.md`, `docs/` | Comprehensive formulas, zero-lookahead policy, evidence gates, trade-offs, and limits. |
+| **4** | **Reproducibility Evidence** | [`evaluation/reproducibility_report.json`](file:///evaluation/reproducibility_report.json) | 3 untouched runs with identical SHA-256 (`c59bd40fe8a891d3d43d98439c4597db25b205e9588efa7cd72fd6c6707ecae1`). |
+| **5** | **Token & Cost Log** | [`evaluation/cost_log.json`](file:///evaluation/cost_log.json) | Full 2,940 shipment run: 0 external LLM calls, 0 tokens, **$0.00 API cost**. |
+
+---
+
+## 9. Repository Structure
 
 ```text
 ├── backend/
 │   ├── app/
-│   │   ├── api/             # FastAPI REST endpoints (/health, /summary, /routes, /qa, /export)
+│   │   ├── api/             # FastAPI REST endpoints (/health, /overview, /routes, /qa, /export)
 │   │   ├── config.py        # Centralized settings & threshold configurations
-│   │   ├── main.py          # FastAPI application & static mount of frontend/dist
+│   │   ├── main.py          # FastAPI application entrypoint & API routers
 │   │   ├── schemas/         # Pydantic v2 domain schemas (models.py)
-│   │   └── services/        # Small, modular analytical services
+│   │   └── services/        # Modular analytical pipeline services
 │   │       ├── ingestion.py          # Ingestion, schema QC, Monday week calculation
 │   │       ├── weekly_analytics.py   # Volume-weighted cost per tonne-km
 │   │       ├── baselines.py          # Zero-lookahead rolling history & peer baselines
@@ -301,39 +306,40 @@ Access the application at `http://localhost:8000`.
 │   │       ├── qa_assistant.py       # Grounded natural language Q&A assistant
 │   │       ├── cost_tracking.py      # Real-time token and compute accounting
 │   │       └── pipeline.py           # Unified batch pipeline orchestrator
-├── frontend/                # Vite + React + TypeScript + Tailwind CSS UI
-│   ├── src/
-│   │   ├── components/      # OperationsOverview, RouteExplorer, AIAssistant, etc.
-│   │   ├── App.tsx          # Main command center shell & navigation
-│   │   └── index.css        # Tailwind styles & dark command center aesthetic
-│   └── dist/                # Production-optimized static build bundle
 ├── data/                    # Authoritative case study inputs
 │   ├── shipment_records.csv # 2,940 raw shipment records
 │   ├── context_notes.csv    # 10 contextual disruption notes
-│   └── sample_output_format_v2.csv # Contract reference
+│   ├── sample_output_format_v2.csv # Contract reference
+│   └── FreightTiger_Intern_CaseStudy.pdf # Original case study brief
 ├── outputs/
-│   └── flagged_routes.csv   # The official graded 8-column CSV artifact
+│   ├── flagged_routes.csv   # The official graded 8-column CSV artifact (728 rows)
+│   └── reproducibility_runs/ # Independent CSV outputs from Runs 1, 2, and 3
 ├── evaluation/
-│   ├── reproducibility_check.py  # 3-run reproducibility harness
-│   ├── reproducibility_report.json # Hashes and diff analysis
-│   ├── run_evaluation.py         # Benchmark eval harness
-│   ├── eval_report.json          # Metrics report (100% gate accuracy)
-│   └── cost_log.json             # Documented $0.00 run cost accounting
+│   ├── reproducibility_check.py    # 3-run reproducibility test harness
+│   ├── reproducibility_report.json # Hashes and diff analysis (100% match)
+│   ├── run_evaluation.py           # Benchmark eval harness
+│   ├── eval_report.json            # Metrics report (100% gate accuracy)
+│   └── cost_log.json               # Documented $0.00 run cost accounting
 ├── tests/                   # 28 pytest automated tests
+│   ├── test_numerical.py    # Baseline formulas, rolling window, self-exclusion
+│   ├── test_evidence.py     # Semantic verification for notes N001–N010
+│   ├── test_golden.py       # Exact verification against case study examples
+│   ├── test_contract.py     # Schema, column order, and quoting validation
+│   └── test_api.py          # FastAPI REST endpoint integration tests
 ├── docs/
 │   ├── ARCHITECTURE.md      # Detailed system architecture & pipeline dataflow
 │   ├── WALKTHROUGH.md       # 10-minute presentation script & 18 interview Q&As
 │   └── IMPLEMENTATION_STATUS.md # Complete requirement traceability matrix
 ├── cli.py                   # Standalone batch execution CLI
 ├── docker-compose.yml       # Containerized orchestration
-├── Dockerfile               # Production multi-stage Docker build
+├── Dockerfile               # Production Python Dockerfile
 ├── Makefile                 # Developer convenience commands
 └── README.md                # Master project documentation
 ```
 
 ---
 
-## 9. Key Trade-Offs & Limitations
+## 10. Key Trade-Offs & Limitations
 
 1. **Deterministic Rule Gates vs. Generative LLMs:**
    - *Choice:* We chose deterministic Python validation gates over prompting an LLM to decide whether a note justifies an anomaly.
@@ -349,20 +355,10 @@ Access the application at `http://localhost:8000`.
 
 ---
 
-## 10. Deliverables Checklist
+## 11. Deliverables Checklist
 
-- [x] Authoritative PDF and CSVs inspected and mapped.
-- [x] Monday week boundaries formatted as ISO `YYYY-MM-DD`.
-- [x] Weighted cost per tonne-km with zero-division guards.
-- [x] Zero-lookahead trailing 8-week history baseline (no future leakage).
-- [x] Same-week same-haul peer baseline with self-exclusion.
-- [x] Configurable anomaly thresholds (default $\ge 15\%$).
-- [x] Local ChromaDB vector retrieval using `all-MiniLM-L6-v2`.
-- [x] Six Hard Evidence Gates (all 10 notes verified, non-causal notes rejected).
-- [x] Exact 8-column graded CSV contract (`outputs/flagged_routes.csv`).
-- [x] 28/28 Pytest tests passing.
-- [x] 3-run reproducibility check verified with identical SHA-256 hash.
-- [x] Token and cost log generated ($0.00 API cost).
-- [x] Full-stack dashboard built and served via FastAPI.
-- [x] 10-minute walkthrough script and 18 interview Q&As (`docs/WALKTHROUGH.md`).
-- [x] Requirement-by-requirement traceability matrix (`docs/IMPLEMENTATION_STATUS.md`).
+- [x] **1. Working Source Code:** Complete project implemented, clean, tested with 28 passing unit & integration tests.
+- [x] **2. Final CSV:** Exact 8-column contract at `outputs/flagged_routes.csv` (728 rows, RFC 4180 compliant).
+- [x] **3. README:** Full documentation covering architecture, calculations, design decisions, limitations, and validation.
+- [x] **4. Reproducibility Evidence:** 3 untouched runs with identical SHA-256 hash (`c59bd40fe8a891d3d43d98439c4597db25b205e9588efa7cd72fd6c6707ecae1`).
+- [x] **5. Token and Cost Log:** Complete accounting for one full batch run at `evaluation/cost_log.json` ($0.00 external API cost).

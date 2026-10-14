@@ -1,6 +1,6 @@
 {
-  "run_id": "run-505a5fd4",
-  "timestamp": "2026-10-14T09:42:18.508417+00:00",
+  "run_id": "run-23fc7221",
+  "timestamp": "2026-10-14T10:00:11.114620+00:00",
   "dataset_records_count": 2940,
   "total_route_weeks": 728,
   "embedding_model": "all-MiniLM-L6-v2",
@@ -12,7 +12,7 @@
   "token_accounting_method": "local-deterministic (0 API tokens utilized during batch pipeline)",
   "provider_currency": "USD",
   "estimated_api_cost": 0.0,
-  "runtime_seconds": 19.242,
+  "runtime_seconds": 22.459,
   "execution_mode": "local-open-source (embeddings via all-MiniLM-L6-v2 on CPU/GPU, zero external API cost)",
   "notes": "Default batch pipeline uses 100% local open-source embeddings (all-MiniLM-L6-v2) and deterministic evidence-validation gating. Zero external LLM calls or paid API keys are required to generate the complete graded output table."
 }

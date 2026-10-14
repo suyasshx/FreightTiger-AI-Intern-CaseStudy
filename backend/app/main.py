@@ -39,23 +39,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from pathlib import Path
-from fastapi.staticfiles import StaticFiles
-
 app.include_router(router)
 
-# Mount compiled React frontend if present
-frontend_dist = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
-if frontend_dist.exists():
-    app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="frontend")
-else:
-    @app.get("/")
-    def root():
-        return {
-            "message": "Welcome to RouteGuard AI API",
-            "docs": "/docs",
-            "health": "/api/health"
-        }
+
+@app.get("/")
+def root():
+    return {
+        "service": "RouteGuard AI - Freight Cost Intelligence Platform",
+        "version": "1.0.0",
+        "docs": "/docs",
+        "health": "/api/health"
+    }
 
 
 if __name__ == "__main__":

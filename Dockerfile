@@ -1,12 +1,4 @@
-# Stage 1: Build Frontend
-FROM node:20-slim AS frontend-builder
-WORKDIR /app/frontend
-COPY frontend/package*.json ./
-RUN npm install
-COPY frontend/ ./
-RUN npm run build
-
-# Stage 2: Python Backend Runtime
+# RouteGuard AI - Python Backend Runtime
 FROM python:3.11-slim
 WORKDIR /app
 
@@ -23,13 +15,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code and data
+# Copy application code, evaluation, and data
 COPY data/ ./data/
 COPY backend/ ./backend/
+COPY evaluation/ ./evaluation/
+COPY tests/ ./tests/
 COPY cli.py .
-
-# Copy compiled frontend from Stage 1 into frontend/dist
-COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
+COPY conftest.py .
 
 EXPOSE 8000
 
